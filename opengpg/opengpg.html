@@ -16,27 +16,27 @@
 
 -->
 
-<script type="text/x-red" data-template-name="OTS_Stamp">
+<script type="text/x-red" data-template-name="GPG_Sign">
 </script>
 
 <!-- Next, some simple help text is provided for the node.                   -->
-<script type="text/x-red" data-help-name="OTS_Stamp">
-    <p>Generate the stamp.</p>
+<script type="text/x-red" data-help-name="GPG_Sign">
+    <p>Sign a message using GPG.</p>
 </script>
 
 <!-- Finally, the node type is registered along with all of its properties   -->
 <script type="text/javascript">
-    RED.nodes.registerType('OTS_Stamp',{
-        category: 'OpenTimestamps',      // the palette category
+    RED.nodes.registerType('GPG_Sign',{
+        category: 'Cryptography',      // the palette category
         color:"#A6BBCF",
         defaults: {             // defines the editable properties of the node
-            name: {value:"OTS_Stamp"}   //  along with default values.
+            name: {value:"GPG_Sign"}   //  along with default values.
         },
         inputs:1,                // set the number of inputs - only 0 or 1
         outputs:1,               // set the number of outputs - 0 to n
         icon: "arrow-in.png",    // set the icon (held in public/icons)
         label: function() {      // sets the default label contents
-            return this.name||this.topic||"OTS_Stamp";
+            return this.name||this.topic||"GPG_Sign";
         },
         labelStyle: function() { // sets the class to apply to the label
             return this.name?"node_label_italic":"";
@@ -45,85 +45,27 @@
 </script>
 
 
-<script type="text/x-red" data-template-name="OTS_Info">
+<script type="text/x-red" data-template-name="GPG_Sign_Verify">
 </script>
 
 <!-- Next, some simple help text is provided for the node.                   -->
-<script type="text/x-red" data-help-name="OTS_Info">
-    <p>Get information about a specific OpenTimestamps passed.</p>
+<script type="text/x-red" data-help-name="GPG_Sign_Verify">
+    <p>Verify a signature of a message using GPG.</p>
 </script>
 
 <!-- Finally, the node type is registered along with all of its properties   -->
 <script type="text/javascript">
-    RED.nodes.registerType('OTS_Info',{
-        category: 'OpenTimestamps',      // the palette category
+    RED.nodes.registerType('GPG_Sign_Verify',{
+        category: 'Cryptography',      // the palette category
         color:"#A6BBCF",
         defaults: {             // defines the editable properties of the node
-            name: {value:"OTS_Info"}   //  along with default values.
+            name: {value:"GPG_Sign_Verify"}   //  along with default values.
         },
         inputs:1,                // set the number of inputs - only 0 or 1
         outputs:1,               // set the number of outputs - 0 to n
-        icon: "debug.png",    // set the icon (held in public/icons)
+        icon: "arrow-in.png",    // set the icon (held in public/icons)
         label: function() {      // sets the default label contents
-            return this.name||this.topic||"OTS_Info";
-        },
-        labelStyle: function() { // sets the class to apply to the label
-            return this.name?"node_label_italic":"";
-        }
-    });
-</script>
-
-
-<script type="text/x-red" data-template-name="OTS_Upgrade">
-</script>
-
-<!-- Next, some simple help text is provided for the node.                   -->
-<script type="text/x-red" data-help-name="OTS_Upgrade">
-    <p>Get information about a specific OpenTimestamps passed.</p>
-</script>
-
-<!-- Finally, the node type is registered along with all of its properties   -->
-<script type="text/javascript">
-    RED.nodes.registerType('OTS_Upgrade',{
-        category: 'OpenTimestamps',      // the palette category
-        color:"#A6BBCF",
-        defaults: {             // defines the editable properties of the node
-            name: {value:"OTS_Upgrade"}   //  along with default values.
-        },
-        inputs:1,                // set the number of inputs - only 0 or 1
-        outputs:1,               // set the number of outputs - 0 to n
-        icon: "inject.png",    // set the icon (held in public/icons)
-        label: function() {      // sets the default label contents
-            return this.name||this.topic||"OTS_Upgrade";
-        },
-        labelStyle: function() { // sets the class to apply to the label
-            return this.name?"node_label_italic":"";
-        }
-    });
-</script>
-
-
-<script type="text/x-red" data-template-name="OTS_Verify">
-</script>
-
-<!-- Next, some simple help text is provided for the node.                   -->
-<script type="text/x-red" data-help-name="OTS_Verify">
-    <p>Get information about a specific OpenTimestamps passed.</p>
-</script>
-
-<!-- Finally, the node type is registered along with all of its properties   -->
-<script type="text/javascript">
-    RED.nodes.registerType('OTS_Verify',{
-        category: 'OpenTimestamps',      // the palette category
-        color:"#A6BBCF",
-        defaults: {             // defines the editable properties of the node
-            name: {value:"OTS_Verify"}   //  along with default values.
-        },
-        inputs:1,                // set the number of inputs - only 0 or 1
-        outputs:1,               // set the number of outputs - 0 to n
-        icon: "alert.png",    // set the icon (held in public/icons)
-        label: function() {      // sets the default label contents
-            return this.name||this.topic||"OTS_Verify";
+            return this.name||this.topic||"GPG_Sign_Verify";
         },
         labelStyle: function() { // sets the class to apply to the label
             return this.name?"node_label_italic":"";
