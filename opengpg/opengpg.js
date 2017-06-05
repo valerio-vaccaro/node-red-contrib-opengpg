@@ -22,72 +22,73 @@
 const openpgp = require('openpgp');
 
 module.exports = function(RED) {
-  // Node for Sign a generic payload
-  function GPG_Sign(n) {
-    RED.nodes.createNode(this, n);
-    this.status({
-      fill: "grey",
-      shape: "dot",
-      text: "Waiting"
-    });
-    var msg = {};
-    var node = this;
-    this.on("input", function(msg) {
-        var privKeyObj = openpgp.key.readArmored(privkey).keys[0];
+    // Node for Sign a generic payload
+    function GPG_Sign(n) {
+      RED.nodes.createNode(this, n);
+      this.status({
+        fill: "grey",
+        shape: "dot",
+        text: "Waiting"
+      });
+      var msg = {};
+      var node = this;
+      this.on("input", function(msg) {
+            var privKeyObj = openpgp.key.readArmored(privkey).keys[0];
 
-        privKeyObj.decrypt(passphrase);
+            privKeyObj.decrypt(passphrase);
 
-        options = {
-          data: msg.payload.data, // input as String (or Uint8Array)
-          privateKeys: privKeyObj // for signing
-        };
+            options = {
+              data: msg.payload.data, // input as String (or Uint8Array)
+              privateKeys: privKeyObj // for signing
+            };
 
-        openpgp.sign(options).then(function(signed) {
-            msg.payload.signature = signed.data; // '-----BEGIN PGP SIGNED MESSAGE ... END PGP SIGNATURE-----'
+            openpgp.sign(options).then(function(signed) {
+                msg.payload.signature = signed.data; // '-----BEGIN PGP SIGNED MESSAGE ... END PGP SIGNATURE-----'
 
-            this.status({
-              fill: "green",
-              shape: "dot",
-              text: "Done"
+                this.status({
+                  fill: "green",
+                  shape: "dot",
+                  text: "Done"
+                });
+
+                node.send(msg);
+              }
+
             });
+          //});
+        }
+        // Node for Sign a generic payload
+      function GPG_Sign_Verify(n) {
+        RED.nodes.createNode(this, n);
+        this.status({
+          fill: "grey",
+          shape: "dot",
+          text: "Waiting"
+        });
+        var msg = {};
+        var node = this;
+        this.on("input", function(msg) {
+          cleartext = signed.data; // '-----BEGIN PGP SIGNED MESSAGE ... END PGP SIGNATURE-----'
 
-            node.send(msg);
-          }
+          options = {
+            message: openpgp.cleartext.readArmored(cleartext), // parse armored message
+            publicKeys: openpgp.key.readArmored(pubkey).keys // for verification
+          };
+
+          openpgp.verify(options).then(function(verified) {
+            validity = verified.signatures[0].valid; // true
+            if (validity) {
+              console.log('signed by key id ' + verified.signatures[0].keyid
+                .toHex());
+            }
+          });
 
         });
-    });
-  // Node for Sign a generic payload
-  function GPG_Sign_Verify(n) {
-    RED.nodes.createNode(this, n);
-    this.status({
-      fill: "grey",
-      shape: "dot",
-      text: "Waiting"
-    });
-    var msg = {};
-    var node = this;
-    this.on("input", function(msg) {
-      cleartext = signed.data; // '-----BEGIN PGP SIGNED MESSAGE ... END PGP SIGNATURE-----'
+        //});
+      }
 
-      options = {
-        message: openpgp.cleartext.readArmored(cleartext), // parse armored message
-        publicKeys: openpgp.key.readArmored(pubkey).keys // for verification
-      };
-
-      openpgp.verify(options).then(function(verified) {
-        validity = verified.signatures[0].valid; // true
-        if (validity) {
-          console.log('signed by key id ' + verified.signatures[0].keyid
-            .toHex());
-        }
-      });
-
-    });
-  });
-}
-
-// Register the node by name. This must be called before overriding any of the
-// Node functions.
-RED.nodes.registerType("GPG_Sign", GPG_Sign);
-RED.nodes.registerType("GPG_Sign_Verify", GPG_Sign_Verify);
-}
+      // Register the node by name. This must be called before overriding any of the
+      // Node functions.
+      RED.nodes.registerType("GPG_Sign", GPG_Sign);
+      RED.nodes.registerType("GPG_Sign_Verify", GPG_Sign_Verify);
+    }
