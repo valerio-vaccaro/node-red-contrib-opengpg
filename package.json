@@ -1,0 +1,21 @@
+{
+  "name": "node-red-contrib-opengpg",
+  "version": "0.0.5",
+  "description": "Node-RED wrapper nodes for OpenGPG.",
+  "author": "Valerio Vaccaro <valerio.vaccaro@gmail.com>",
+  "dependencies": {
+    "openpgp": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/valerio-vaccaro/node-red-contrib-opengpg"
+  },
+  "keywords": ["node-red", "GPG", "OpenGPG", "crypt",
+    "signature"
+  ],
+  "node-red": {
+    "nodes": {
+      "opentimestamps": "opengpg/opengpg.js"
+    }
+  }
+}

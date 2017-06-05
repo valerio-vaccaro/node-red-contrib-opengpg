@@ -1,0 +1,132 @@
+<!--
+  Copyright 2017 Valerio Vaccaro - www.valeriovaccaro.it
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+
+-->
+
+<script type="text/x-red" data-template-name="OTS_Stamp">
+</script>
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="OTS_Stamp">
+    <p>Generate the stamp.</p>
+</script>
+
+<!-- Finally, the node type is registered along with all of its properties   -->
+<script type="text/javascript">
+    RED.nodes.registerType('OTS_Stamp',{
+        category: 'OpenTimestamps',      // the palette category
+        color:"#A6BBCF",
+        defaults: {             // defines the editable properties of the node
+            name: {value:"OTS_Stamp"}   //  along with default values.
+        },
+        inputs:1,                // set the number of inputs - only 0 or 1
+        outputs:1,               // set the number of outputs - 0 to n
+        icon: "arrow-in.png",    // set the icon (held in public/icons)
+        label: function() {      // sets the default label contents
+            return this.name||this.topic||"OTS_Stamp";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+
+<script type="text/x-red" data-template-name="OTS_Info">
+</script>
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="OTS_Info">
+    <p>Get information about a specific OpenTimestamps passed.</p>
+</script>
+
+<!-- Finally, the node type is registered along with all of its properties   -->
+<script type="text/javascript">
+    RED.nodes.registerType('OTS_Info',{
+        category: 'OpenTimestamps',      // the palette category
+        color:"#A6BBCF",
+        defaults: {             // defines the editable properties of the node
+            name: {value:"OTS_Info"}   //  along with default values.
+        },
+        inputs:1,                // set the number of inputs - only 0 or 1
+        outputs:1,               // set the number of outputs - 0 to n
+        icon: "debug.png",    // set the icon (held in public/icons)
+        label: function() {      // sets the default label contents
+            return this.name||this.topic||"OTS_Info";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+
+<script type="text/x-red" data-template-name="OTS_Upgrade">
+</script>
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="OTS_Upgrade">
+    <p>Get information about a specific OpenTimestamps passed.</p>
+</script>
+
+<!-- Finally, the node type is registered along with all of its properties   -->
+<script type="text/javascript">
+    RED.nodes.registerType('OTS_Upgrade',{
+        category: 'OpenTimestamps',      // the palette category
+        color:"#A6BBCF",
+        defaults: {             // defines the editable properties of the node
+            name: {value:"OTS_Upgrade"}   //  along with default values.
+        },
+        inputs:1,                // set the number of inputs - only 0 or 1
+        outputs:1,               // set the number of outputs - 0 to n
+        icon: "inject.png",    // set the icon (held in public/icons)
+        label: function() {      // sets the default label contents
+            return this.name||this.topic||"OTS_Upgrade";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+
+<script type="text/x-red" data-template-name="OTS_Verify">
+</script>
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="OTS_Verify">
+    <p>Get information about a specific OpenTimestamps passed.</p>
+</script>
+
+<!-- Finally, the node type is registered along with all of its properties   -->
+<script type="text/javascript">
+    RED.nodes.registerType('OTS_Verify',{
+        category: 'OpenTimestamps',      // the palette category
+        color:"#A6BBCF",
+        defaults: {             // defines the editable properties of the node
+            name: {value:"OTS_Verify"}   //  along with default values.
+        },
+        inputs:1,                // set the number of inputs - only 0 or 1
+        outputs:1,               // set the number of outputs - 0 to n
+        icon: "alert.png",    // set the icon (held in public/icons)
+        label: function() {      // sets the default label contents
+            return this.name||this.topic||"OTS_Verify";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
