@@ -22,6 +22,8 @@
 <!-- Next, some simple help text is provided for the node.                   -->
 <script type="text/x-red" data-help-name="GPG_Sign">
     <p>Sign a message using GPG.</p>
+    <p>The original message has to be on <b>msg.payload.data</b> and signature on
+       <b>msg.payload.signature</b>. The private key has to be on <b>msg.privkey</b>.</p>
 </script>
 
 <!-- Finally, the node type is registered along with all of its properties   -->
@@ -51,6 +53,8 @@
 <!-- Next, some simple help text is provided for the node.                   -->
 <script type="text/x-red" data-help-name="GPG_Sign_Verify">
     <p>Verify a signature of a message using GPG.</p>
+    <p>The original message has to be on <b>msg.payload.data</b> and signature on
+       <b>msg.payload.signature</b>. The public key has to be on <b>msg.pubkey</b>.</p>
 </script>
 
 <!-- Finally, the node type is registered along with all of its properties   -->

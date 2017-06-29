@@ -33,7 +33,7 @@
      var msg = {};
      var node = this;
      this.on("input", function(msg) {
-       var privKeyObj = openpgp.key.readArmored(privkey).keys[0];
+       var privKeyObj = openpgp.key.readArmored(msg.privkey).keys[0];
 
        privKeyObj.decrypt(passphrase);
 
@@ -68,7 +68,7 @@
 
        options = {
          message: openpgp.cleartext.readArmored(cleartext), // parse armored message
-         publicKeys: openpgp.key.readArmored(pubkey).keys // for verification
+         publicKeys: openpgp.key.readArmored(msg.pubkey).keys // for verification
        };
 
        openpgp.verify(options).then(function(verified) {
