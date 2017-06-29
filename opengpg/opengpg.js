@@ -35,7 +35,7 @@
      this.on("input", function(msg) {
        var privKeyObj = openpgp.key.readArmored(msg.privkey).keys[0];
 
-       privKeyObj.decrypt(passphrase);
+       privKeyObj.decrypt(msg.passphrase);
 
        options = {
          data: msg.payload.data, // input as String (or Uint8Array)
@@ -49,6 +49,9 @@
            shape: "dot",
            text: "Done"
          });
+
+         delete msg['privkey'];
+         delete msg['passphrase'];
          node.send(msg);
        });
      });
@@ -74,10 +77,14 @@
        openpgp.verify(options).then(function(verified) {
          validity = verified.signatures[0].valid; // true
          if (validity) {
-           console.log('signed by key id ' + verified.signatures[
-               0].keyid
+           console.log('signed by key id ' + verified.signatures[0].keyid
              .toHex());
+           msg.payload = "valid";
+         } else {
+           msg.payload = "not valid";
          }
+         delete msg['pubkey'];
+         node.send(msg);
        });
 
      });
