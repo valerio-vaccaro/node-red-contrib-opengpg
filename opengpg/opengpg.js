@@ -25,13 +25,11 @@
    // Node for Sign a generic payload
    function GPG_Sign(n) {
      RED.nodes.createNode(this, n);
-     var myNode = this;
      this.status({
        fill: "grey",
        shape: "dot",
        text: "Waiting"
      });
-     var msg = {};
      var node = this;
      this.on("input", function(msg) {
        var privKeyObj = openpgp.key.readArmored(msg.privkey).keys[0];
@@ -45,7 +43,7 @@
 
        openpgp.sign(options).then(function(signed) {
          msg.payload.signature = signed.data; // '-----BEGIN PGP SIGNED MESSAGE ... END PGP SIGNATURE-----'
-         myNode.status({
+         node.status({
            fill: "green",
            shape: "dot",
            text: "Done"
@@ -60,13 +58,11 @@
    // Node for Sign a generic payload
    function GPG_Sign_Verify(n) {
      RED.nodes.createNode(this, n);
-     var myNode = this;
      this.status({
        fill: "grey",
        shape: "dot",
        text: "Waiting"
      });
-     var msg = {};
      var node = this;
      this.on("input", function(msg) {
        //cleartext = signed.data; // '-----BEGIN PGP SIGNED MESSAGE ... END PGP SIGNATURE-----'
@@ -81,15 +77,15 @@
          if (validity) {
            console.log('signed by key id ' + verified.signatures[0].keyid
              .toHex());
-           msg.payload = "valid";
-           myNode.status({
+           msg.status = "valid";
+           node.status({
              fill: "green",
              shape: "dot",
              text: "Valid"
            });
          } else {
-           msg.payload = "not valid";
-           myNode.status({
+           msg.status = "not valid";
+           node.status({
              fill: "red",
              shape: "dot",
              text: "Invalid"
