@@ -18,15 +18,13 @@
 
 <script type="text/x-red" data-template-name="GPG_Sign">
 </script>
-
-<!-- Next, some simple help text is provided for the node.                   -->
+                -->
 <script type="text/x-red" data-help-name="GPG_Sign">
     <p>Sign a message using GPG.</p>
     <p>The original message has to be on <b>msg.payload.data</b> and signature on
        <b>msg.payload.signature</b>. The private key has to be on <b>msg.privkey</b> plus the key on <b>msg.passphrase</b>.</p>
 </script>
 
-<!-- Finally, the node type is registered along with all of its properties   -->
 <script type="text/javascript">
     RED.nodes.registerType('GPG_Sign',{
         category: 'Cryptography',      // the palette category
@@ -50,14 +48,12 @@
 <script type="text/x-red" data-template-name="GPG_Sign_Verify">
 </script>
 
-<!-- Next, some simple help text is provided for the node.                   -->
 <script type="text/x-red" data-help-name="GPG_Sign_Verify">
     <p>Verify a signature of a message using GPG.</p>
     <p>The original message has to be on <b>msg.payload.data</b> and signature on
        <b>msg.payload.signature</b>. The public key has to be on <b>msg.pubkey</b>.</p>
 </script>
 
-<!-- Finally, the node type is registered along with all of its properties   -->
 <script type="text/javascript">
     RED.nodes.registerType('GPG_Sign_Verify',{
         category: 'Cryptography',      // the palette category
@@ -70,6 +66,63 @@
         icon: "arrow-in.png",    // set the icon (held in public/icons)
         label: function() {      // sets the default label contents
             return this.name||this.topic||"GPG_Sign_Verify";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="GPG_Encrypt">
+</script>
+
+<script type="text/x-red" data-help-name="GPG_Encrypt">
+    <p>Encrypt a message using GPG.</p>
+    <p>The original message has to be on <b>msg.payload.data</b> and signature on
+       <b>msg.payload.signature</b>. The public key has to be on <b>msg.pubkey</b>.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('GPG_Encrypt',{
+        category: 'Cryptography',      // the palette category
+        color:"#E6E0F8",
+        defaults: {             // defines the editable properties of the node
+            name: {value:"GPG_Encrypt"}   //  along with default values.
+        },
+        inputs:1,                // set the number of inputs - only 0 or 1
+        outputs:1,               // set the number of outputs - 0 to n
+        icon: "arrow-in.png",    // set the icon (held in public/icons)
+        label: function() {      // sets the default label contents
+            return this.name||this.topic||"GPG_Encrypt";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+
+<script type="text/x-red" data-template-name="GPG_Decrypt">
+</script>
+
+<script type="text/x-red" data-help-name="GPG_Decrypt">
+    <p>Decrypt a message using GPG.</p>
+    <p>The original message has to be on <b>msg.payload.data</b> and signature on
+       <b>msg.payload.signature</b>. The public key has to be on <b>msg.pubkey</b>.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('GPG_Decrypt',{
+        category: 'Cryptography',      // the palette category
+        color:"#E6E0F8",
+        defaults: {             // defines the editable properties of the node
+            name: {value:"GPG_Decrypt"}   //  along with default values.
+        },
+        inputs:1,                // set the number of inputs - only 0 or 1
+        outputs:1,               // set the number of outputs - 0 to n
+        icon: "arrow-in.png",    // set the icon (held in public/icons)
+        label: function() {      // sets the default label contents
+            return this.name||this.topic||"GPG_Decrypt";
         },
         labelStyle: function() { // sets the class to apply to the label
             return this.name?"node_label_italic":"";

@@ -98,9 +98,97 @@
      });
    }; // End of function
 
+
+   // Node for Sign a generic payload
+   function GPG_Encrypt(n) {
+     RED.nodes.createNode(this, n);
+     this.status({
+       fill: "grey",
+       shape: "dot",
+       text: "Waiting"
+     });
+     var node = this;
+     this.on("input", function(msg) {
+       //cleartext = signed.data; // '-----BEGIN PGP SIGNED MESSAGE ... END PGP SIGNATURE-----'
+
+       options = {
+         message: openpgp.cleartext.readArmored(msg.payload.signature), // parse armored message
+         publicKeys: openpgp.key.readArmored(msg.pubkey).keys // for verification
+       };
+
+       openpgp.verify(options).then(function(verified) {
+         validity = verified.signatures[0].valid; // true
+         if (validity) {
+           console.log('signed by key id ' + verified.signatures[0].keyid
+             .toHex());
+           msg.status = "valid";
+           node.status({
+             fill: "green",
+             shape: "dot",
+             text: "Valid"
+           });
+         } else {
+           msg.status = "not valid";
+           node.status({
+             fill: "red",
+             shape: "dot",
+             text: "Invalid"
+           });
+         }
+         delete msg['pubkey'];
+         node.send(msg);
+       });
+
+     });
+   }; // End of function
+
+   // Node for Sign a generic payload
+   function GPG_Decrypt(n) {
+     RED.nodes.createNode(this, n);
+     this.status({
+       fill: "grey",
+       shape: "dot",
+       text: "Waiting"
+     });
+     var node = this;
+     this.on("input", function(msg) {
+       options = {
+         message: openpgp.cleartext.readArmored(msg.payload.signature), // parse armored message
+         publicKeys: openpgp.key.readArmored(msg.pubkey).keys // for verification
+       };
+
+       openpgp.verify(options).then(function(verified) {
+         validity = verified.signatures[0].valid; // true
+         if (validity) {
+           console.log('signed by key id ' + verified.signatures[0].keyid
+             .toHex());
+           msg.status = "valid";
+           node.status({
+             fill: "green",
+             shape: "dot",
+             text: "Valid"
+           });
+         } else {
+           msg.status = "not valid";
+           node.status({
+             fill: "red",
+             shape: "dot",
+             text: "Invalid"
+           });
+         }
+         delete msg['pubkey'];
+         node.send(msg);
+       });
+
+     });
+   }; // End of function
+
+
    // Register the node by name. This must be called before overriding any of the
    // Node functions.
    RED.nodes.registerType("GPG_Sign", GPG_Sign);
    RED.nodes.registerType(
      "GPG_Sign_Verify", GPG_Sign_Verify);
+   RED.nodes.registerType("GPG_Encrypt", GPG_Encrypt);
+   RED.nodes.registerType("GPG_Decrypt", GPG_Decrypt);
  }
