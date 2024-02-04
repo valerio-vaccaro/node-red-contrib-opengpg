@@ -111,32 +111,34 @@
      this.on("input", function(msg) {
        //cleartext = signed.data; // '-----BEGIN PGP SIGNED MESSAGE ... END PGP SIGNATURE-----'
 
-       options = {
-         message: openpgp.cleartext.readArmored(msg.payload.signature), // parse armored message
-         publicKeys: openpgp.key.readArmored(msg.pubkey).keys // for verification
-       };
+       const plainData = msg.payload;
+       const publicKeyArmored = msg.pubkey;
 
-       openpgp.verify(options).then(function(verified) {
-         validity = verified.signatures[0].valid; // true
-         if (validity) {
-           console.log('signed by key id ' + verified.signatures[0].keyid
-             .toHex());
-           msg.status = "valid";
-           node.status({
-             fill: "green",
-             shape: "dot",
-             text: "Valid"
+
+
+       var gpgMessage;
+       var gpgEncryptionKeys;
+       openpgp.createMessage({text: plainData}).then(function(message){
+         gpgMessage = message;
+
+         openpgp.readKey({armoredKey: publicKeyArmored}).then(function(encryptionKeys){
+           gpgEncryptionKeys = encryptionKeys;
+
+           openpgp.encrypt({
+             message: gpgMessage,
+             encryptionKeys: gpgEncryptionKeys
+           }).then(function(encrypted){
+             node.status({
+               fill: "green",
+               shape: "dot",
+               text: "Done"
+             });
+
+             delete msg['pubkey'];
+             msg['payload'] = encrypted;
+             node.send(msg);
            });
-         } else {
-           msg.status = "not valid";
-           node.status({
-             fill: "red",
-             shape: "dot",
-             text: "Invalid"
-           });
-         }
-         delete msg['pubkey'];
-         node.send(msg);
+         })
        });
 
      });
@@ -152,32 +154,39 @@
      });
      var node = this;
      this.on("input", function(msg) {
-       options = {
-         message: openpgp.cleartext.readArmored(msg.payload.signature), // parse armored message
-         publicKeys: openpgp.key.readArmored(msg.pubkey).keys // for verification
-       };
 
-       openpgp.verify(options).then(function(verified) {
-         validity = verified.signatures[0].valid; // true
-         if (validity) {
-           console.log('signed by key id ' + verified.signatures[0].keyid
-             .toHex());
-           msg.status = "valid";
-           node.status({
-             fill: "green",
-             shape: "dot",
-             text: "Valid"
+       const passphrase = msg.payload.passphrase;
+       const encryptedMessage = msg.payload.encryptedMessage;
+       var gpgPrivateKey;
+       var gpgMessage;
+       openpgp.readPrivateKey({armoredKey: msg.payload.privkey}).then(function(privateKey){
+         gpgPrivateKey = privateKey;
+
+         openpgp.decryptKey({
+           privateKey: gpgPrivateKey,
+           passphrase
+         }).then(function(privateKey){
+           gpgPrivateKey = privateKey;
+
+           openpgp.readMessage({armoredMessage: encryptedMessage}).then(function(message){
+             gpgMessage = message;
+
+             openpgp.decrypt({
+               message: gpgMessage,
+               decryptionKeys: [gpgPrivateKey]
+             }).then(function(decrypted){
+               node.status({
+                 fill: "green",
+                 shape: "dot",
+                 text: "Done"
+               });
+
+               msg['payload'] = decrypted.data;
+               node.send(msg);
+             });
+
            });
-         } else {
-           msg.status = "not valid";
-           node.status({
-             fill: "red",
-             shape: "dot",
-             text: "Invalid"
-           });
-         }
-         delete msg['pubkey'];
-         node.send(msg);
+         });
        });
 
      });
