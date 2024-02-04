@@ -78,8 +78,8 @@
 
 <script type="text/x-red" data-help-name="GPG_Encrypt">
     <p>Encrypt a message using GPG.</p>
-    <p>The original message has to be on <b>msg.payload.data</b> and signature on
-       <b>msg.payload.signature</b>. The public key has to be on <b>msg.pubkey</b>.</p>
+    <p>The original message has to be on <b>msg.payload</b> and the recipients
+       public key has to be in <b>msg.pubkey</b>.</p>
 </script>
 
 <script type="text/javascript">
@@ -107,8 +107,8 @@
 
 <script type="text/x-red" data-help-name="GPG_Decrypt">
     <p>Decrypt a message using GPG.</p>
-    <p>The original message has to be on <b>msg.payload.data</b> and signature on
-       <b>msg.payload.signature</b>. The public key has to be on <b>msg.pubkey</b>.</p>
+    <p>The encrypted message has to be on <b>msg.payload.data</b>, the recipients private key
+       in <b>msg.payload.privkey</b> and its passphrase in <b>msg.payload.passphrase</b>.</p>
 </script>
 
 <script type="text/javascript">
